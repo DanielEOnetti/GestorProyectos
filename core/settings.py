@@ -137,11 +137,13 @@ LOGOUT_REDIRECT_URL = '/admin/login/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# SEGURIDAD PARA RAILWAY
-# 1. Confiar en la URL de Railway (copiada de tu error)
+# SEGURIDAD RAILWAY
 CSRF_TRUSTED_ORIGINS = [
-    'https://web-production-11f6c.up.railway.app'
+    'https://web-production-11f6c.up.railway.app',
+    'https://*.railway.app' 
 ]
 
-# 2. Decirle a Django que confíe en el HTTPS de Railway
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
