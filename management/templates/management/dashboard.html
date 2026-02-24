@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mis Proyectos</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+        .project-card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .project-link { text-decoration: none; color: #2c3e50; font-weight: bold; font-size: 1.2em; }
+        .project-link:hover { color: #007bff; text-decoration: underline; }
+        .role-badge { background: #007bff; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; margin-left: 10px; vertical-align: middle; }
+        .progress-bar-bg { background: #eee; height: 20px; border-radius: 10px; margin-top: 10px; }
+        .progress-bar-fill { background: #4caf50; height: 100%; border-radius: 10px; text-align: center; color: white; font-size: 12px; line-height: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Bienvenido, {{ user.username }}</h1>
+    
+    {% if projects %}
+        {% for project in projects %}
+            <div class="project-card">
+                <div style="margin-bottom: 10px;">
+                    <a href="{% url 'project_detail' project.id %}" class="project-link">
+                        {{ project.name }}
+                    </a>
+                    <span class="role-badge">{{ project.current_role }}</span>
+                </div>
+                
+                <p>{{ project.description }}</p>
+                
+                <p>Progreso: {{ project.get_progress|floatformat:0 }}%</p>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: {{ project.get_progress }}%;"></div>
+                </div>
+
+                <p><small>Tareas: {{ project.tasks.count }}</small></p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No tienes proyectos asignados aún.</p>
+    {% endif %}
+</body>
+</html>
