@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -132,3 +133,6 @@ LOGIN_REDIRECT_URL = '/'
 
 # 3. Cuando alguien cierre sesión, mándalo de vuelta al login
 LOGOUT_REDIRECT_URL = '/admin/login/'
+
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
