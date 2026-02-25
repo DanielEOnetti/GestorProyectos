@@ -35,6 +35,9 @@ class Assignment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
 
+    class Meta:
+        unique_together = ('user', 'project')
+
 class Task(models.Model):
     STATUS_CHOICES = [('TODO', 'To Do'), ('IN_PROG', 'In Progress'), ('DONE', 'Done')]
     project = models.ForeignKey(Project, related_name='tasks', on_delete=models.CASCADE)

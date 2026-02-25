@@ -27,21 +27,14 @@ class ProjectDashboardView(LoginRequiredMixin, ListView):
             
         return context
     
-
 class ProjectDetailView(LoginRequiredMixin, DetailView):
     model = Project
     template_name = 'management/project_detail.html'
     context_object_name = 'project'
 
     def get_queryset(self):
-        # Seguridad: Solo permite ver proyectos donde el usuario tiene asignación
-        return Project.objects.filter(assignment__user=self.request.user)
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Averiguamos el rol del usuario actual para saber si puede ver el botón
-        user_role = self.object.get_user_role(self.request.user)
-        context['is_admin'] = user_role and user_role.can_edit
-        return context
+        # Añadir .distinct() al final es la clave
+        return Project.objects.filter(assignment__user=self.request.user).distinct()
     
 class CompleteTaskView(LoginRequiredMixin, View):
     def post(self, request, pk):
