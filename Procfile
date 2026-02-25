@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn core.wsgi
+web: python manage.py migrate && python manage.py flush --no-input && python manage.py loaddata datos_iniciales.json && gunicorn core.wsgi
