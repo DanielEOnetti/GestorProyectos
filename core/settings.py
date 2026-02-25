@@ -56,7 +56,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        'DIRS': [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -125,14 +125,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 
-# 1. Cuando alguien no esté logueado, mándalo al login del admin
-LOGIN_URL = '/admin/login/'
-
-# 2. Cuando alguien se loguee correctamente, mándalo al Dashboard (tu página principal)
+LOGIN_URL = 'signup'
 LOGIN_REDIRECT_URL = '/'
-
-# 3. Cuando alguien cierre sesión, mándalo de vuelta al login
-LOGOUT_REDIRECT_URL = '/admin/login/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -144,6 +139,6 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = not DEBUG
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG

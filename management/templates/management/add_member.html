@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Añadir Miembro</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+        .container { background: white; padding: 30px; border-radius: 8px; max-width: 500px; margin: 0 auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        select { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        .btn-cancel { color: #666; text-decoration: none; margin-left: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Añadir Miembro al Equipo</h1>
+        <p>Selecciona un usuario registrado para darle acceso a este proyecto.</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <label>Usuario:</label>
+            {{ form.user }}
+            
+            <label>Rol:</label>
+            {{ form.role }}
+            
+            <br><br>
+            <button type="submit">Añadir Usuario</button>
+            <a href="javascript:history.back()" class="btn-cancel">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

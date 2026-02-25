@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nuevo Proyecto</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+        .container { background: white; padding: 30px; border-radius: 8px; max-width: 600px; margin: 0 auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        input[type="text"], textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #218838; }
+        .btn-cancel { color: #666; text-decoration: none; margin-left: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Crear Nuevo Proyecto</h1>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <label>Nombre del Proyecto:</label>
+            {{ form.name }}
+            
+            <label>Descripción:</label>
+            {{ form.description }}
+            
+            <br><br>
+            <button type="submit">Crear Proyecto</button>
+            <a href="{% url 'dashboard' %}" class="btn-cancel">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

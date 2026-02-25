@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eliminar Tarea</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f4f4f4; }
+        .card { background: white; padding: 30px; border-radius: 8px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn-danger { background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        .btn-cancel { color: #666; text-decoration: none; margin-left: 15px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>¿Estás seguro?</h2>
+        <p>Vas a eliminar la tarea: <strong>"{{ object.title }}"</strong></p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-danger">Sí, eliminar</button>
+            <a href="javascript:history.back()" class="btn-cancel">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>
