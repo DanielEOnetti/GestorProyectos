@@ -15,61 +15,56 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>{{ project.name }}</h1>
+    <div class="container"> <h1>{{ project.name }}</h1>
         <p>{{ project.description }}</p>
         <hr>
         
+        {% if is_admin %}
+            <a href="{% url 'add_member' project.id %}" style="background: #6f42c1; color: white; text-decoration: none; padding: 5px 10px; border-radius: 5px; font-size: 0.8em;">
+                + Añadir Miembro
+            </a>
+            <a href="{% url 'add_task' project.id %}" style="background: #28a745; color: white; text-decoration: none; padding: 5px 10px; border-radius: 5px; font-size: 0.8em; margin-left: 10px;">
+                + Nueva Tarea
+            </a>
+        {% endif %}
 
-{% if is_admin %}
-    <a href="{% url 'add_member' project.id %}" style="background: #6f42c1; color: white; text-decoration: none; padding: 5px 10px; border-radius: 5px; font-size: 0.8em;">
-        + Añadir Miembro
-    </a>
-{% endif %}
-{% if is_admin %}
-    <a href="{% url 'add_task' project.id %}" style="background: #28a745; color: white; text-decoration: none; padding: 5px 10px; border-radius: 5px; font-size: 0.8em; margin-left: 10px;">
-        + Nueva Tarea
-    </a>
-{% endif %}
-
-<hr>
+        <hr>
+        
         <h3>Tareas del Proyecto</h3>
         <ul class="task-list">
             {% for task in project.tasks.all %}
-<li class="task-item">
-    <span>
-        <strong>{{ task.title }}</strong><br>
-        <small>Asignado a: {{ task.assigned_to.username|default:"Sin asignar" }}</small>
-        
-        {% if is_admin %}
-            <small style="margin-left: 10px;">
-                <a href="{% url 'edit_task' task.id %}" style="color: #007bff;">✏️ Editar</a> | 
-                <a href="{% url 'delete_task' task.id %}" style="color: #dc3545;">🗑️ Borrar</a>
-            </small>
-        {% endif %}
-    </span>
-    
-    <div style="display: flex; align-items: center; gap: 10px;">
-        <span class="badge {{ task.status }}">{{ task.get_status_display }}</span>
+            <li class="task-item">
+                <span>
+                    <strong>{{ task.title }}</strong><br>
+                    <small>Asignado a: {{ task.assigned_to.username|default:"Sin asignar" }}</small>
+                    
+                    {% if is_admin %}
+                        <small style="margin-left: 10px;">
+                            <a href="{% url 'edit_task' task.id %}" style="color: #007bff;">✏️ Editar</a> | 
+                            <a href="{% url 'delete_task' task.id %}" style="color: #dc3545;">🗑️ Borrar</a>
+                        </small>
+                    {% endif %}
+                </span>
+                
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span class="badge {{ task.status }}">{{ task.get_status_display }}</span>
 
-        {% if task.status != 'DONE' %}
-            <form action="{% url 'complete_task' task.id %}" method="post" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit" title="Marcar como Completada" style="background: none; border: 1px solid #28a745; color: #28a745; cursor: pointer; border-radius: 50%; width: 30px; height: 30px; line-height: 25px; padding: 0;">
-                    ✓
-                </button>
-            </form>
-        {% endif %}
-    </div>
-</li>
+                    {% if task.status != 'DONE' %}
+                        <form action="{% url 'complete_task' task.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" title="Marcar como Completada" style="background: none; border: 1px solid #28a745; color: #28a745; cursor: pointer; border-radius: 50%; width: 30px; height: 30px; line-height: 25px; padding: 0;">
+                                ✓
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            </li>
             {% empty %}
                 <p>No hay tareas en este proyecto.</p>
             {% endfor %}
         </ul>
 
-        <a href="{% url 'dashboard' %}" class="btn-back">← Volver al Dashboard</a>
-    </div>
-    <hr style="margin-top: 40px;">
+        <hr style="margin-top: 40px;">
         
         <h3>💬 Chat del Equipo</h3>
         
@@ -93,6 +88,6 @@
 
         <br><br>
         <a href="{% url 'dashboard' %}" class="btn-back">← Volver al Dashboard</a>
+
     </div> </body>
-</body>
 </html>

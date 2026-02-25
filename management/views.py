@@ -33,8 +33,16 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'project'
 
     def get_queryset(self):
-        # Añadir .distinct() al final es la clave
+        # Esto ya lo tienes bien
         return Project.objects.filter(assignment__user=self.request.user).distinct()
+
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Calculamos si el usuario actual es Admin para mostrar/ocultar botones
+        user_role = self.object.get_user_role(self.request.user)
+        context['is_admin'] = user_role and user_role.can_edit
+        return context
     
 class CompleteTaskView(LoginRequiredMixin, View):
     def post(self, request, pk):
